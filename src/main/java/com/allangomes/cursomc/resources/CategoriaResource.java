@@ -3,24 +3,25 @@ package com.allangomes.cursomc.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.allangomes.cursomc.domain.Categoria;
+import com.allangomes.cursomc.services.CategoriaService;
 
 @RestController
 public class CategoriaResource {
 	
-	@GetMapping(value="/categorias")
-	public List<Categoria> listar() {
-		
-		Categoria cat1 = new Categoria(1, "Informática");
-		Categoria cat2 = new Categoria(2, "Escritório");
-		
-		List<Categoria> list = new ArrayList<>();
-		list.add(cat1);
-		list.add(cat2);
-		return list;
+	@Autowired
+	private CategoriaService service;
+	
+	@GetMapping(value="/categorias/{id}")
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+		Categoria obj = service.buscar(id);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
