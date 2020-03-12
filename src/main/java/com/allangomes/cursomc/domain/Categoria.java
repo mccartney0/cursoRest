@@ -1,11 +1,14 @@
 package com.allangomes.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity  //Já cria o banco automaticamente
 public class Categoria implements Serializable{
@@ -15,100 +18,43 @@ public class Categoria implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY) //definindo ID como Chave primária
 	private Integer id;
 	private String nome;
-	private String nascimento;
-	private String foto;
-	private String assinatura;
-	private String user_name;
-	private String password;
+	
+	@ManyToMany(mappedBy="categorias")
+	private List<Produto> produtos = new ArrayList<>();
+	
 	public Categoria() {
 	}
 
-	public Categoria(Integer id, String nome, String nascimento, String foto, String assinatura, String user_name,
-			String password) {
+	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.nascimento = nascimento;
-		this.foto = foto;
-		this.assinatura = assinatura;
-		this.user_name = user_name;
-		this.password = password;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
 
 	public String getNome() {
 		return nome;
 	}
 
-
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-
-
-	public String getNascimento() {
-		return nascimento;
+	
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-
-
-	public void setNascimento(String nascimento) {
-		this.nascimento = nascimento;
-	}
-
-
-
-	public String getFoto() {
-		return foto;
-	}
-
-
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-
-
-	public String getAssinatura() {
-		return assinatura;
-	}
-
-
-
-	public void setAssinatura(String assinatura) {
-		this.assinatura = assinatura;
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 	
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,6 +79,4 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 }
